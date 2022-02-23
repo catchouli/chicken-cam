@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<meta http-equiv="Cache-Control" content="no-store" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.15.4/video-js.min.css" rel="stylesheet" />
+		<link href="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.css" rel="stylesheet" />
+		<link href="style.css?v=3" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="cam-container">
+			<div class="cam">
+				<video-js id="kitchen_cam" class="vjs-default-skin" controls autoplay muted data-setup='{"liveui": true}'>
+					<source src="https://chicken-cam-backend.talkhaus.com/kitchen-cam/stream.m3u8" type="application/x-mpegURL"> 
+				</video-js>
+			</div>
+			<div class="cam">
+				<video-js id="run_cam" class="vjs-default-skin" controls autoplay muted data-setup='{"liveui": true}'>
+					<source src="https://chicken-cam-backend.talkhaus.com/run-cam/stream.m3u8" type="application/x-mpegURL"> 
+				</video-js>
+			</div>
+			<div class="cam">
+				<video-js id="backdoor_cam" class="vjs-default-skin" controls autoplay muted data-setup='{"liveui": true}'>
+					<source src="https://chicken-cam-backend.talkhaus.com/backdoor-cam/stream.m3u8" type="application/x-mpegURL"> 
+				</video-js>
+			</div>
+			<div class="cam">
+				<video-js id="coop_cam" class="vjs-default-skin" controls autoplay muted data-setup='{"liveui": true}'>
+					<source src="https://chicken-cam-backend.talkhaus.com/coop-cam/stream.m3u8" type="application/x-mpegURL"> 
+				</video-js>
+			</div>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.15.4/video.min.js"></script> 
+			<script src="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.min.js"></script>
+
+			<script>
+				let run_cam = videojs('run_cam');
+				let coop_cam = videojs('coop_cam');
+				let kitchen_cam = videojs('kitchen_cam');
+				let backdoor_cam = videojs('backdoor_cam');
+
+				let cams = [ run_cam, coop_cam, kitchen_cam, backdoor_cam ];
+				cams.forEach((cam) => {
+									cam.seekButtons({
+														forward: 10,
+														back: 10
+													});
+								});
+
+			</script>
+			<!--
+			<script>
+			       let coop_cam = videojs('coop_cam');
+			       let run_cam = videojs('run_cam');
+			       let cams = [ coop_cam, run_cam ];
+
+			       let lastSeek = -1;
+
+			       let seekHandler = function() {
+			       let time = coop_cam.currentTime();
+			       if (lastSeek == time)
+			       return;
+			       lastSeek = time;
+			       let timeToEnd = this.liveTracker.seekableEnd() - time;
+			       let thisCam = this;
+			       cams.forEach((cam) => {
+			       if (cam != thisCam) {
+			       cam.currentTime(cam.liveTracker.seekableEnd() - timeToEnd);
+			       }
+			       });
+			       };
+
+			       [coop_cam].forEach((cam) => {
+			       cam.on('seeking', seekHandler);
+			       cam.play();
+			       });
+								 */
+			</script>
+			-->
+	</body>
+</html>

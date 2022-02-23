@@ -1,0 +1,27 @@
+version: '3'
+services:
+  bridge:
+    container_name: wyze-bridge
+    restart: unless-stopped
+    image: mrlt8/wyze-bridge:latest # Use a prebuilt image
+      # build:  # Uncomment to build from source
+      #     context: ./app # Uncomment to build from source
+      #     # dockerfile: Dockerfile.arm # Uncomment to build for arm
+    ports:
+      - 17592:8888
+    environment:
+      - NET_MODE=ANY
+      - FRESH_DATA=True
+      - RTSP_RTMPDISABLE=Yes
+      - QUALITY=HD60
+      - MQTT_HOST=False
+      - OFFLINE_TIME=5
+      - RTSP_READTIMEOUT=11s
+      - MAX_NOREADY=300
+    env_file:
+      - wyze-auth.env
+    networks:
+      - bridge
+
+networks:
+  bridge:
